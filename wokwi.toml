@@ -1,0 +1,4 @@
+[wokwi]
+elf = "build/hemingway_editor.elf"
+firmware = "build/hemingway_editor.bin"
+serialPort = "/dev/ttyUSB0"
