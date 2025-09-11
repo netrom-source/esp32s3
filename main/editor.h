@@ -20,5 +20,3 @@ void editor_insert_char(editor_t *ed, char c);
 const char *editor_get_buffer(editor_t *ed);
 size_t editor_get_length(editor_t *ed);
 void editor_clear(editor_t *ed);
-
-#endif // EDITOR_H

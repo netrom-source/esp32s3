@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stddef.h>
+#include "esp_err.h"
 
 /**
  * @brief Initialize and mount the SD card using the FATFS driver.

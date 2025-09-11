@@ -4,6 +4,7 @@
 #include "esp_log.h"
 #include "esp_vfs_fat.h"
 #include "sdmmc_cmd.h"
+#include "driver/sdmmc_host.h"
 
 static const char *TAG = "sdcard";
 static int file_counter = 0; /**< Used for filename generation */
