@@ -30,6 +30,8 @@ Text input is provided through the serial monitor.
 
 ## Build / Run
 
+The project targets **ESP32-S3** (see `sdkconfig.defaults`). Build and run:
+
 ```sh
 idf.py build
 ```
