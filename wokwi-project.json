@@ -1,4 +1,5 @@
 {
   "name": "Hemingway Editor",
-  "board": "esp32-s3-devkitc-1"
+  "board": "esp32-s3-devkitc-1",
+  "diagram": "diagram.json"
 }
