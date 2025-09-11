@@ -10,9 +10,9 @@ Connections are defined in `diagram.json`:
 
 | Peripheral | Pins |
 |------------|------|
-| SSD1306 I2C | SDA=GPIO8, SCL=GPIO9 |
-| KY-040 encoder | CLK=GPIO4, DT=GPIO5, SW=GPIO6 (with internal pull-ups) |
-| microSD (SPI) | CS=GPIO10, MOSI=GPIO11, MISO=GPIO12, SCK=GPIO13 |
+| SSD1306 I2C | VCC=3V3, GND=GND, SDA=GPIO8, SCL=GPIO9 |
+| KY-040 encoder | VCC=3V3, GND=GND, CLK=GPIO4, DT=GPIO5, SW=GPIO6 (with internal pull-ups) |
+| microSD (SPI) | VCC=3V3, GND=GND, CS=GPIO10, MOSI=GPIO11, MISO=GPIO12, SCK=GPIO13 |
 
 The SD card is present only to satisfy the wiring requirements; saving uses
 SPIFFS (`/spiffs/note.txt`).
