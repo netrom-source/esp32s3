@@ -1,23 +1,56 @@
 {
   "version": 1,
-  "author": "Hemingway Editor",
+  "author": "Anonymous maker",
   "editor": "wokwi",
   "parts": [
-    { "id": "esp", "type": "chip", "model": "ESP32-S3" },
-    { "id": "oled", "type": "display", "model": "SSD1306" },
-    { "id": "sd", "type": "storage", "model": "SD" }
+    {
+      "type": "board-esp32-s3-devkitc-1",
+      "id": "esp",
+      "top": 67.02,
+      "left": 14.17,
+      "attrs": { "builder": "esp-idf" }
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled1",
+      "top": 262.34,
+      "left": -124.57,
+      "attrs": { "i2cAddress": "0x3c" }
+    },
+    {
+      "type": "wokwi-ky-040",
+      "id": "encoder1",
+      "top": 155.3,
+      "left": -221.6,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-microsd-card",
+      "id": "sd1",
+      "top": 144.23,
+      "left": 144.07,
+      "attrs": {}
+    }
   ],
   "connections": [
-    [ "esp:3V3", "oled:VCC" ],
-    [ "esp:GND", "oled:GND" ],
-    [ "esp:GPIO8", "oled:SDA" ],
-    [ "esp:GPIO9", "oled:SCL" ],
-
-    [ "esp:3V3", "sd:VCC" ],
-    [ "esp:GND", "sd:GND" ],
-    [ "esp:GPIO12", "sd:MISO" ],
-    [ "esp:GPIO11", "sd:MOSI" ],
-    [ "esp:GPIO13", "sd:SCK" ],
-    [ "esp:GPIO10", "sd:CS" ]
-  ]
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "oled1:VCC", "esp:3V3.1", "red", [ "v0" ] ],
+    [ "oled1:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "oled1:SDA", "esp:8", "green", [ "v0" ] ],
+    [ "oled1:SCL", "esp:9", "green", [ "v0" ] ],
+    [ "sd1:VCC", "esp:3V3.2", "red", [ "h0" ] ],
+    [ "sd1:GND", "esp:GND.2", "black", [ "h0" ] ],
+    [ "sd1:CS", "esp:10", "green", [ "h0" ] ],
+    [ "sd1:SCK", "esp:13", "green", [ "h0" ] ],
+    [ "sd1:MISO", "esp:12", "green", [ "h0" ] ],
+    [ "sd1:MOSI", "esp:11", "green", [ "h0" ] ],
+    [ "encoder1:VCC", "esp:3V3.2", "red", [ "h0" ] ],
+    [ "encoder1:GND", "esp:GND.2", "black", [ "h0" ] ],
+    [ "encoder1:CLK", "esp:4", "green", [ "h0" ] ],
+    [ "encoder1:DT", "esp:5", "green", [ "h0" ] ],
+    [ "encoder1:SW", "esp:6", "green", [ "h0" ] ]
+  ],
+  "dependencies": {}
 }
+
