@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "author": "Hemingway Editor",
+  "editor": "wokwi",
+  "parts": [
+    { "id": "esp", "type": "chip", "model": "ESP32-S3" },
+    { "id": "oled", "type": "display", "model": "SSD1306" },
+    { "id": "sd", "type": "storage", "model": "SD" }
+  ],
+  "connections": [
+    [ "esp:3V3", "oled:VCC" ],
+    [ "esp:GND", "oled:GND" ],
+    [ "esp:GPIO8", "oled:SDA" ],
+    [ "esp:GPIO9", "oled:SCL" ],
+
+    [ "esp:3V3", "sd:VCC" ],
+    [ "esp:GND", "sd:GND" ],
+    [ "esp:GPIO12", "sd:MISO" ],
+    [ "esp:GPIO11", "sd:MOSI" ],
+    [ "esp:GPIO13", "sd:SCK" ],
+    [ "esp:GPIO10", "sd:CS" ]
+  ]
+}
