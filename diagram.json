@@ -3,9 +3,10 @@
   "author": "Hemingway Editor",
   "editor": "wokwi",
   "parts": [
-    { "id": "esp", "type": "chip", "model": "ESP32-S3" },
-    { "id": "oled", "type": "display", "model": "SSD1306" },
-    { "id": "sd", "type": "storage", "model": "SD" }
+    { "type": "wokwi-esp32-s3-devkitc-1", "id": "esp" },
+    { "type": "wokwi-ssd1306", "id": "oled" },
+    { "type": "wokwi-microsd-card", "id": "sd" },
+    { "type": "wokwi-ky-040", "id": "encoder" }
   ],
   "connections": [
     [ "esp:3V3", "oled:VCC" ],
@@ -18,6 +19,12 @@
     [ "esp:GPIO12", "sd:MISO" ],
     [ "esp:GPIO11", "sd:MOSI" ],
     [ "esp:GPIO13", "sd:SCK" ],
-    [ "esp:GPIO10", "sd:CS" ]
+    [ "esp:GPIO10", "sd:CS" ],
+
+    [ "esp:3V3", "encoder:VCC" ],
+    [ "esp:GND", "encoder:GND" ],
+    [ "esp:GPIO4", "encoder:CLK" ],
+    [ "esp:GPIO5", "encoder:DT" ],
+    [ "esp:GPIO6", "encoder:SW" ]
   ]
 }
