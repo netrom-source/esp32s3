@@ -1,39 +1,41 @@
-# ESP32-S3 Hemingway Editor
+# ESP32-S3 Rotary Writer
 
-This project contains a minimal text editor for the ESP32-S3 using the ESP-IDF.
-It is designed to run inside the [Wokwi](https://wokwi.com/) simulator and is
-prepared for extension with USB-host keyboard support on real hardware.
+Minimal text editor for the ESP32-S3 running in [Wokwi](https://wokwi.com/).
+The project uses an SSD1306 OLED for output and a KY-040 rotary encoder for
+navigation. Text is stored on the internal flash using SPIFFS.
+
+## Hardware
+
+Connections are defined in `diagram.json`:
+
+| Peripheral | Pins |
+|------------|------|
+| SSD1306 I2C | VCC=3V3, GND=GND, SDA=GPIO8, SCL=GPIO9 |
+| KY-040 encoder | VCC=3V3, GND=GND, CLK=GPIO4, DT=GPIO5, SW=GPIO6 (with internal pull-ups) |
+| microSD (SPI) | VCC=3V3, GND=GND, CS=GPIO10, MOSI=GPIO11, MISO=GPIO12, SCK=GPIO13 |
+
+The SD card is present only to satisfy the wiring requirements; saving uses
+SPIFFS (`/spiffs/note.txt`).
 
 ## Features
 
-* Start screen offering **New file** and stub **Open file** options.
-* Text editor that accepts keyboard input from the serial console (and a
-  placeholder USB-host driver).
-* **Hemingway mode** – when enabled backspace is disabled.
-* Manual save with `Ctrl+S` and automatic save every 30 seconds.
-* Text is stored as `.txt` files on a FAT formatted SD card using the IDF's
-  FATFS component. Filenames are generated sequentially.
-* Simple display abstraction printing the text to the UART console. It can be
-  replaced by a real OLED (SSD1306) driver when running on hardware.
+* Status bar with file name, cursor position and dirty/Hemingway indicators
+* Rotary encoder rotation scrolls text; short press toggles cursor mode
+* Long press opens the menu: **New**, **Open** (loads dummy text), **Save**,
+  **Settings** (font size + Hemingway mode) and **Exit**
+* Hemingway mode disables Backspace
+* Autosave every 30 seconds
 
-## Building
+Text input is provided through the serial monitor.
+
+## Build / Run
+
+The project targets **ESP32-S3** (see `sdkconfig.defaults`). Build and run:
 
 ```sh
 idf.py build
 ```
 
-Run the firmware in Wokwi by opening this folder in Visual Studio Code with the
-Wokwi extension installed. The provided `diagram.json` and `wokwi.toml` files
-instantiate an ESP32-S3, an SSD1306 display and an SD card.
+Open the project in Wokwi and press **Run**. The editor appears on the OLED and
+is controlled with the encoder.
 
-## Controls
-
-* `N` / `n` – create a new file.
-* `Ctrl+S` – save current text.
-* `Ctrl+E` – toggle Hemingway mode.
-
-## USB Host
-
-The project contains a stub (`usb_host_stub.c`) where USB keyboard handling can
-be implemented. Wokwi does not currently emulate a USB host controller, so the
-stub simply returns no input.

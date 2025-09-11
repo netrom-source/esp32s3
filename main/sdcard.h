@@ -4,7 +4,7 @@
 #include "esp_err.h"
 
 /**
- * @brief Initialize and mount the SD card using the FATFS driver.
+ * @brief Initialize storage (SPIFFS) used for saving notes.
  *
  * Returns ESP_OK on success.
  */

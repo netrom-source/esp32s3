@@ -2,43 +2,41 @@
 #include <stdio.h>
 #include <string.h>
 #include "esp_log.h"
-#include "esp_vfs_fat.h"
-#include "sdmmc_cmd.h"
-#include "driver/sdmmc_host.h"
+#include "esp_spiffs.h"
 
-static const char *TAG = "sdcard";
-static int file_counter = 0; /**< Used for filename generation */
+static const char *TAG = "storage";
 
+/**
+ * @brief Initialize SPIFFS filesystem used for storing notes.
+ */
 esp_err_t sdcard_init(void) {
-    esp_err_t ret;
-    ESP_LOGI(TAG, "Initializing SD card");
-
-    sdmmc_host_t host = SDMMC_HOST_DEFAULT();
-    sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
-
-    // This example uses 1-bit mode for compatibility with Wokwi's SD card.
-    slot_config.width = 1;
-
-    esp_vfs_fat_sdmmc_mount_config_t mount_config = {
-        .format_if_mount_failed = true,
+    esp_vfs_spiffs_conf_t conf = {
+        .base_path = "/spiffs",
+        .partition_label = NULL,
         .max_files = 5,
-        .allocation_unit_size = 16 * 1024
+        .format_if_mount_failed = true,
     };
-
-    sdmmc_card_t *card;
-    ret = esp_vfs_fat_sdmmc_mount("/sdcard", &host, &slot_config, &mount_config, &card);
+    esp_err_t ret = esp_vfs_spiffs_register(&conf);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to mount SD card: %s", esp_err_to_name(ret));
+        ESP_LOGE(TAG, "Failed to mount SPIFFS: %s", esp_err_to_name(ret));
         return ret;
     }
-    ESP_LOGI(TAG, "SD card mounted");
+    size_t total = 0, used = 0;
+    esp_spiffs_info(NULL, &total, &used);
+    ESP_LOGI(TAG, "SPIFFS mounted, %u/%u bytes used", (unsigned)used, (unsigned)total);
     return ESP_OK;
 }
 
+/**
+ * @brief Generate filename. For this demo we always use note.txt
+ */
 void sdcard_generate_filename(char *buffer, size_t buflen) {
-    snprintf(buffer, buflen, "/sdcard/file%03d.txt", file_counter++);
+    snprintf(buffer, buflen, "/spiffs/note.txt");
 }
 
+/**
+ * @brief Save text buffer to SPIFFS.
+ */
 esp_err_t sdcard_save_text(const char *path, const char *text) {
     ESP_LOGI(TAG, "Saving to %s", path);
     FILE *f = fopen(path, "w");
