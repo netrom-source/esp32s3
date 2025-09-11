@@ -5,7 +5,8 @@
   "parts": [
     { "id": "esp", "type": "chip", "model": "ESP32-S3" },
     { "id": "oled", "type": "display", "model": "SSD1306" },
-    { "id": "sd", "type": "storage", "model": "SD" }
+    { "id": "sd", "type": "storage", "model": "SD" },
+    { "id": "encoder", "type": "wokwi-ky-040" }
   ],
   "connections": [
     [ "esp:3V3", "oled:VCC" ],
@@ -18,6 +19,12 @@
     [ "esp:GPIO12", "sd:MISO" ],
     [ "esp:GPIO11", "sd:MOSI" ],
     [ "esp:GPIO13", "sd:SCK" ],
-    [ "esp:GPIO10", "sd:CS" ]
+    [ "esp:GPIO10", "sd:CS" ],
+
+    [ "esp:3V3", "encoder:VCC" ],
+    [ "esp:GND", "encoder:GND" ],
+    [ "esp:GPIO4", "encoder:CLK" ],
+    [ "esp:GPIO5", "encoder:DT" ],
+    [ "esp:GPIO6", "encoder:SW" ]
   ]
 }
