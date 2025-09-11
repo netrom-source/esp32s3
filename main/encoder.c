@@ -1,5 +1,6 @@
 #include "encoder.h"
 #include "driver/gpio.h"
+#include "esp_attr.h"
 #include "esp_timer.h"
 
 static int pinA, pinB, pinSW;
